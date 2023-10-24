@@ -1,0 +1,13 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "src/mysql-connector-j-8.1.0.jar",
+        "src/sqlite-jdbc-3.43.2.1.jar",
+        "src/slf4j.jar/slf4j.jar",
+        "src/logback-core-1.2.3.jar",
+        "src/sli4j-slf4j-logback-2.0.jar",
+        "src/logback-classic-1.1.7.jar"
+    ]
+}
