@@ -1,4 +1,4 @@
-package UserInterface;
+
 import javax.swing.*;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
@@ -27,7 +27,6 @@ public class Add {
         JPanel bookPanel = new JPanel();
         bookPanel.setLayout(new GridBagLayout());
 
-        final boolean[] isBookPanelSelected = new boolean[1];
         GridBagConstraints gbc = new GridBagConstraints();
         Font boldFont = new Font("Arial", Font.BOLD, 22);
         Font plainFont = new Font("Arial", Font.PLAIN, 19);
@@ -241,7 +240,7 @@ public class Add {
                 java.sql.Date date = new java.sql.Date(selectedDate.getTime());
                 System.out.println("success");
                 addToBookCollection(book, author, date, language, category);
-                BookManagementUI.reloadTable();
+                BookManagementF.reloadTable();
                 
                 bookNameField.setText("");
                 authorField.setText("");

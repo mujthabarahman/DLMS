@@ -1,10 +1,6 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import UserInterface.Add;
-import UserInterface.BookManagementUI;
-import UserInterface.TransactionUI;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,7 +37,7 @@ public class HeaderPartial {
             public void actionPerformed(ActionEvent e) {
                 // Handle navigation to the home page
                 System.out.println("inside actionlistener");
-                BookManagementUI.handleUpdateButtonClick();
+                BookManagementF.handleUpdateButtonClick();
             }
         });
         buttonPanel.add(updateButton);
@@ -76,7 +72,7 @@ public class HeaderPartial {
 
 
     public static void navigateToTransactionPage() {
-        TransactionUI.displayTransactions();
+        Transaction.displayTransactions();
     }
 
     public static void navigateToAddRemovePage() {

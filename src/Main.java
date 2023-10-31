@@ -1,7 +1,5 @@
 import javax.swing.*;
 
-import UserInterface.BookManagementUI;
-
 import java.awt.*;
 
 public class Main {
@@ -14,7 +12,7 @@ public class Main {
 
         // Create the header
         JPanel headerPanel = HeaderPartial.createHeader();
-        BookManagementUI x = new BookManagementUI();
+        BookManagementF x = new BookManagementF();
         JScrollPane homePanel = x.displayBooks();
         // Create the content panel
         

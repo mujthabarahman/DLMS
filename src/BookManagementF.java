@@ -1,4 +1,4 @@
-package UserInterface;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +16,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
 
-public class BookManagementUI {
+public class BookManagementF {
     static DefaultTableModel model = new DefaultTableModel();
     static JTable table = new JTable(model){
         @Override
@@ -308,7 +308,7 @@ public class BookManagementUI {
             e.printStackTrace();
         }
     }
-    private static class ImageRenderer extends DefaultTableCellRenderer {
+    /*private static class ImageRenderer extends DefaultTableCellRenderer {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -316,5 +316,5 @@ public class BookManagementUI {
             label.setHorizontalAlignment(SwingConstants.CENTER);
             return label;
         }
-    }
+    }*/
 }
