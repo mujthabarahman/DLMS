@@ -58,7 +58,7 @@ public class HeaderPartial {
         buttonPanel.add(transactionButton);
 
 
-        JButton AddRemoveButton = new RoundButton("Add/Remove",Color.white,0);
+        JButton AddRemoveButton = new RoundButton("Add",Color.white,0);
         AddRemoveButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         //AddRemoveButton.setBorder(new EmptyBorder(0, 10, 0, 0)); // Add padding
         AddRemoveButton.addActionListener(new ActionListener() {

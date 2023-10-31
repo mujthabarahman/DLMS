@@ -1,5 +1,7 @@
 package UserInterface;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -77,6 +79,12 @@ public class BookManagementUI {
             searchButton.setPreferredSize(new Dimension(80, 30));
             searchButton.setBackground(new Color(40,148,1));
             searchButton.setForeground(Color.white);
+
+            searchButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e){
+                    displaySearchedBooks(searchField.getText());
+                }
+            });
             
             // Add components to the search panel
             searchPanel.add(searchField);
@@ -89,8 +97,14 @@ public class BookManagementUI {
                 String category = resultSet.getString("category");
                 String language = resultSet.getString("language");
                 Date date = resultSet.getDate("date");
-                Object[] data = { index, name, author, category, language, date.toString() };
+                //Vector<Object> row = new Vector<>();
+                // Add other data to the row
+                //ImageIcon deleteIcon = new ImageIcon(getClass().getResource("3687412.png"));
+                //row.add(deleteIcon);
+
+                Object[] data = { index, name, author, category, language, date.toString()};
                 model.addRow(data);
+                //table.getColumnModel().getColumn(7).setCellRenderer(new ImageRenderer());
             }
 
             resultSet.close();
@@ -221,5 +235,86 @@ public class BookManagementUI {
                 e.printStackTrace();
             }
         }
-    }    
+    }
+    public static void reloadTable() {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0); // Clear the existing data from the table
+    
+        try {
+            Connection connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM books";
+            ResultSet resultSet = statement.executeQuery(query);
+    
+            while (resultSet.next()) {
+                int index = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String author = resultSet.getString("author");
+                String category = resultSet.getString("category");
+                String language = resultSet.getString("language");
+                Date date = resultSet.getDate("date");
+                //Vector<Object> row = new Vector<>();
+                // Add other data to the row
+                //ImageIcon deleteIcon = new ImageIcon(BookManagementUI.Class().getResource("3687412.png"));
+                //row.add(deleteIcon);
+                Object[] data = {index, name, author, category, language, date.toString()};
+                model.addRow(data); // Add fetched data to the table model
+                //table.getColumnModel().getColumn(7).setCellRenderer(new ImageRenderer());
+            }
+    
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void displaySearchedBooks(String searchText) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        // Use the searchText to filter the results in the database query
+        try {
+            // Connect to the database and execute the search query using the 'searchText'
+            Connection connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM books WHERE name LIKE ? OR author LIKE ? OR category LIKE ? OR language LIKE ?");
+            statement.setString(1, "%" + searchText + "%");
+            statement.setString(2, "%" + searchText + "%");
+            statement.setString(3, "%" + searchText + "%");
+            statement.setString(4, "%" + searchText + "%");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int index = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String author = resultSet.getString("author");
+                String category = resultSet.getString("category");
+                String language = resultSet.getString("language");
+                Date date = resultSet.getDate("date");
+                //Vector<Object> row = new Vector<>();
+                // Add other data to the row
+                //ImageIcon deleteIcon = new ImageIcon(getClass().getResource("3687412.png"));
+                //row.add(deleteIcon);
+                Object[] data = {index, name, author, category, language, date.toString()};
+                model.addRow(data); // Add fetched data to the table model
+                //table.getColumnModel().getColumn(7).setCellRenderer(new ImageRenderer());
+            }
+
+            // Rest of the code remains the same as the 'displayBooks' method, but use the resultSet from the search query
+            resultSet.close();
+            statement.close();
+            connection.close();
+            // ...
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private static class ImageRenderer extends DefaultTableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            label.setIcon((ImageIcon) value);
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+            return label;
+        }
+    }
 }
